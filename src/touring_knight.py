@@ -22,8 +22,9 @@ class Board:
     def place_knight(self, row: int, col: int) -> None:
         if not self.is_valid_position(row, col):
             raise InvalidPositionException(f"Knight must be placed on a {self.rows} by {self.cols} board")
-
         if self.knight_position is not None:
             raise KnightAlreadyPresentException("Knight already present on the board")
-
         self.knight_position = (row, col)
+
+    def get_possible_knight_moves(self) -> list[tuple[int, int]]:
+        ...

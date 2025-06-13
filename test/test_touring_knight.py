@@ -32,3 +32,9 @@ def test_invalid_knight_placement() -> None:
     board = Board(rows=5, cols=5)
     with pytest.raises(InvalidPositionException):
         board.place_knight(5, 5)
+
+
+def test_number_of_possible_moves_in_corner() -> None:
+    board = Board(rows=5, cols=5)
+    board.place_knight(0, 0)
+    assert len(board.get_possible_knight_moves()) == 2
