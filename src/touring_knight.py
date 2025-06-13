@@ -1,3 +1,4 @@
 class Board:
-    def __init__(self, num_rows: int, num_cols: int) -> None:
-        raise NotImplemented
+    def __init__(self, rows: int, cols: int) -> None:
+        self.rows = rows
+        self.cols = cols
