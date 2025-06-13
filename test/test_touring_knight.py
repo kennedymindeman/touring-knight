@@ -38,3 +38,9 @@ def test_number_of_possible_moves_in_corner() -> None:
     board = Board(rows=5, cols=5)
     board.place_knight(0, 0)
     assert len(board.get_possible_knight_moves()) == 2
+
+
+def test_number_of_possible_moves_in_center() -> None:
+    board = Board(rows=5, cols=5)
+    board.place_knight(2, 2)
+    assert len(board.get_possible_knight_moves()) == 8
