@@ -55,3 +55,11 @@ def test_moveing_non_existent_knight() -> None:
     board = Board(rows=5, cols=5)
     with pytest.raises(NoKnightOnBoardException):
         board.get_possible_knight_moves()
+
+
+def test_next_moves_from_corner() -> None:
+    board = Board(rows=5, cols=5)
+    board.place_knight(0, 0)
+    possible_knight_moves = board.get_possible_knight_moves()
+    assert (1, 2) in possible_knight_moves
+    assert (2, 1) in possible_knight_moves
