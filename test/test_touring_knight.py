@@ -1,4 +1,9 @@
-from src.touring_knight import Board, KnightAlreadyPresentException, InvalidPositionException
+from src.touring_knight import (
+    Board,
+    KnightAlreadyPresentException,
+    InvalidPositionException,
+    NoKnightOnBoardException,
+)
 import pytest
 
 
@@ -44,3 +49,9 @@ def test_number_of_possible_moves_in_center() -> None:
     board = Board(rows=5, cols=5)
     board.place_knight(2, 2)
     assert len(board.get_possible_knight_moves()) == 8
+
+
+def test_moveing_non_existent_knight() -> None:
+    board = Board(rows=5, cols=5)
+    with pytest.raises(NoKnightOnBoardException):
+        board.get_possible_knight_moves()

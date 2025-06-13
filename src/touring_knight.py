@@ -15,6 +15,11 @@ class NoKnightOnBoardException(InvalidBoardException):
 
 
 class Board:
+    KNIGHT_OFFSETS = (
+        (1, 2), (-1, 2), (-1, -2), (1, -2),
+        (2, 1), (-2, 1), (-2, -1), (2, -1),
+    )
+
     def __init__(self, *, rows: int, cols: int) -> None:
         self.rows = rows
         self.cols = cols
@@ -33,14 +38,10 @@ class Board:
     def get_possible_knight_moves(self) -> list[tuple[int, int]]:
         if self.knight_position is None:
             raise NoKnightOnBoardException("There must be a knight on the board to move it")
-        offsets = [
-            (1, 2), (-1, 2), (-1, -2), (1, -2),
-            (2, 1), (-2, 1), (-2, -1), (2, -1),
-        ]
         valid_next_positions = []
         row, col = self.knight_position
-        for row_offset, col_offset in offsets:
-            next_position = (row + row_offset, col + col_offset)
-            if self.is_valid_position(*next_position):
-                valid_next_positions.append(next_position)
+        for row_offset, col_offset in Board.KNIGHT_OFFSETS:
+            valid_next_position = (row + row_offset, col + col_offset)
+            if self.is_valid_position(*valid_next_position):
+                valid_next_positions.append(valid_next_position)
         return valid_next_positions
