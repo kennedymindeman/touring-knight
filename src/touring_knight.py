@@ -28,6 +28,7 @@ class Board:
         self.rows = rows
         self.cols = cols
         self.visited = set()
+        self.move_stack = []
         self.knight_position = None
 
     def is_valid_position(self, row: int, col: int) -> bool:
@@ -61,14 +62,10 @@ class Board:
         self.knight_position = (row, col)
         self.visited.add((row, col))
 
-    def find_best_next_move(self) -> tuple[int, int] | None:
+    def get_valid_moves_ordered_by_cost(self) -> list[tuple[int, int]]:
         if self.knight_position is None:
             raise NoKnightOnBoardException("There must be a knight on the board to move it")
-        least_cost = None
-        best_move = None
-        for move in self.get_possible_knight_moves(*self.knight_position):
-            cost = len(self.get_possible_knight_moves(*move))
-            if not least_cost or cost < least_cost:
-                least_cost = cost
-                best_move = move
-        return best_move
+        return sorted(
+            self.get_possible_knight_moves(*self.knight_position),
+            key=lambda x: len(self.get_possible_knight_moves(*x)),
+        )
