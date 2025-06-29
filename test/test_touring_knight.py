@@ -1,5 +1,6 @@
 from src.touring_knight import (
     Board,
+    InvalidKnightMove,
     KnightAlreadyPresentException,
     InvalidPositionException,
     NoKnightOnBoardException,
@@ -70,3 +71,16 @@ def test_move_knight_from_center() -> None:
     board.place_knight(2, 2)
     board.move_knight(row=1, col=0)
     assert board.knight_position == (1, 0)
+
+
+def test_move_knight_from_center_to_invalid_tile() -> None:
+    board = Board(rows=5, cols=5)
+    board.place_knight(2, 2)
+    with pytest.raises(InvalidKnightMove):
+        board.move_knight(row=2, col=0)
+
+
+def test_move_non_existent_knight() -> None:
+    board = Board(rows=5, cols=5)
+    with pytest.raises(NoKnightOnBoardException):
+        board.move_knight(row=2, col=0)

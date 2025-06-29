@@ -14,6 +14,10 @@ class NoKnightOnBoardException(InvalidBoardException):
     pass
 
 
+class InvalidKnightMove(InvalidBoardException):
+    pass
+
+
 class Board:
     KNIGHT_OFFSETS = (
         (1, 2), (-1, 2), (-1, -2), (1, -2),
@@ -46,5 +50,7 @@ class Board:
                 valid_next_positions.append(valid_next_position)
         return valid_next_positions
 
-    def move_knight(self) -> None:
-        raise NotImplementedError()
+    def move_knight(self, *, row: int, col: int) -> None:
+        if (row, col) not in self.get_possible_knight_moves():
+            raise InvalidKnightMove(f"Knight cannot move from {self.knight_position} to {(row, col)}")
+        self.knight_position = (row, col)
