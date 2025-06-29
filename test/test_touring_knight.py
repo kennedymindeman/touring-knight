@@ -112,3 +112,8 @@ def test_best_move_to_corner() -> None:
     board = Board(rows=5, cols=5)
     board.place_knight(2, 1)
     assert board.get_valid_moves_ordered_by_cost()[0] == (0, 0)
+
+
+def test_board_not_solved_on_instantiation() -> None:
+    board = Board(rows=5, cols=5)
+    assert not board.solved()
