@@ -27,6 +27,7 @@ class Board:
     def __init__(self, *, rows: int, cols: int) -> None:
         self.rows = rows
         self.cols = cols
+        self.visited = set()
         self.knight_position = None
 
     def is_valid_position(self, row: int, col: int) -> bool:
@@ -38,6 +39,7 @@ class Board:
         if self.knight_position is not None:
             raise KnightAlreadyPresentException("Knight already present on the board")
         self.knight_position = (row, col)
+        # self.visited.add((row, col))
 
     def get_possible_knight_moves(self) -> list[tuple[int, int]]:
         if self.knight_position is None:
@@ -54,3 +56,4 @@ class Board:
         if (row, col) not in self.get_possible_knight_moves():
             raise InvalidKnightMove(f"Knight cannot move from {self.knight_position} to {(row, col)}")
         self.knight_position = (row, col)
+        # self.visited.add((row, col))

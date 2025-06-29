@@ -84,3 +84,16 @@ def test_move_non_existent_knight() -> None:
     board = Board(rows=5, cols=5)
     with pytest.raises(NoKnightOnBoardException):
         board.move_knight(row=2, col=0)
+
+
+def test_move_knight_from_center_visits_tile() -> None:
+    board = Board(rows=5, cols=5)
+    board.place_knight(2, 2)
+    board.move_knight(row=1, col=0)
+    assert (1, 0) in board.visited
+
+
+def test_place_knight_visits_tile() -> None:
+    board = Board(rows=5, cols=5)
+    board.place_knight(1, 1)
+    assert (1, 1) in board.visited
