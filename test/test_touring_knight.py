@@ -1,4 +1,5 @@
 from src.touring_knight import (
+    BackTrackException,
     Board,
     InvalidKnightMove,
     InvalidPositionException,
@@ -127,3 +128,31 @@ def test_move_stack_is_length_1_after_placement() -> None:
     board = Board(rows=5, cols=5)
     board.place_knight(1, 1)
     assert len(board.move_stack) == 1
+
+
+def test_backtrack_on_initialized_board() -> None:
+    board = Board(rows=5, cols=5)
+    with pytest.raises(BackTrackException):
+        board.backtrack()
+
+
+def test_backtracking_after_placement() -> None:
+    board = Board(rows=5, cols=5)
+    board.place_knight(0, 0)
+    board.backtrack()
+    assert len(board.move_stack) == 0
+
+
+def test_position_after_backtracking_to_empty_board() -> None:
+    board = Board(rows=5, cols=5)
+    board.place_knight(0, 0)
+    board.backtrack()
+    assert not board.knight_position
+
+
+def test_position_after_backtracking_to_previous_move() -> None:
+    board = Board(rows=5, cols=5)
+    board.place_knight(0, 0)
+    board.place_knight(2, 1)
+    board.backtrack()
+    assert board.knight_position == (0, 0)
