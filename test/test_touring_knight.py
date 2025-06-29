@@ -136,7 +136,7 @@ def test_backtrack_on_initialized_board() -> None:
         board.backtrack()
 
 
-def test_backtracking_after_placement() -> None:
+def test_backtracking_after_placement_stack_length() -> None:
     board = Board(rows=5, cols=5)
     board.place_knight(0, 0)
     board.backtrack()
@@ -156,3 +156,18 @@ def test_position_after_backtracking_to_previous_move() -> None:
     board.place_knight(2, 1)
     board.backtrack()
     assert board.knight_position == (0, 0)
+
+
+def test_backtracking_after_placement_visited_length() -> None:
+    board = Board(rows=5, cols=5)
+    board.place_knight(0, 0)
+    board.backtrack()
+    assert len(board.visited) == 0
+
+
+def test_backtracking_after_move_visted_length() -> None:
+    board = Board(rows=5, cols=5)
+    board.place_knight(0, 0)
+    board.place_knight(2, 1)
+    board.backtrack()
+    assert len(board.visited) == 1
