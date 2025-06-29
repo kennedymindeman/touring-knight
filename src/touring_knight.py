@@ -10,6 +10,10 @@ class InvalidKnightMove(InvalidBoardException):
     pass
 
 
+class BackTrackException(InvalidBoardException):
+    pass
+
+
 class Board:
     KNIGHT_OFFSETS = (
         (1, 2), (-1, 2), (-1, -2), (1, -2),
@@ -68,3 +72,13 @@ class Board:
         for row in range(self.rows):
             valid_next_positions.extend((row, col) for col in range(self.cols))
         return valid_next_positions
+
+    def backtrack(self) -> None:
+        if len(self.visited) == 0:
+            raise BackTrackException("Cannot backtrack on a board with no knight")
+        undone_move = self.move_stack.pop()
+        self.visited.remove(undone_move)
+        if len(self.visited) == 0:
+            self.knight_position = None
+        else:
+            self.knight_position = self.move_stack[-1]
