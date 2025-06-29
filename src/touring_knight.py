@@ -2,15 +2,7 @@ class InvalidBoardException(Exception):
     pass
 
 
-class KnightAlreadyPresentException(InvalidBoardException):
-    pass
-
-
 class InvalidPositionException(InvalidBoardException):
-    pass
-
-
-class NoKnightOnBoardException(InvalidBoardException):
     pass
 
 
@@ -38,14 +30,6 @@ class Board:
             (row, col) not in self.visited
         )
 
-    def place_knight(self, row: int, col: int) -> None:
-        if not self.is_valid_position(row, col):
-            raise InvalidPositionException(f"Knight must be placed on a {self.rows} by {self.cols} board")
-        if self.knight_position is not None:
-            raise KnightAlreadyPresentException("Knight already present on the board")
-        self.knight_position = (row, col)
-        self.visited.add((row, col))
-
     def get_possible_knight_moves(self, row: int, col: int) -> list[tuple[int, int]]:
         valid_next_positions = []
         for row_offset, col_offset in Board.KNIGHT_OFFSETS:
@@ -54,21 +38,33 @@ class Board:
                 valid_next_positions.append(valid_next_position)
         return valid_next_positions
 
-    def move_knight(self, row: int, col: int) -> None:
-        if self.knight_position is None:
-            raise NoKnightOnBoardException("There must be a knight on the board to move it")
-        if (row, col) not in self.get_possible_knight_moves(*self.knight_position):
+    def place_knight(self, row: int, col: int) -> None:
+        if self.knight_position is None and not self.is_valid_position(row, col):
+            raise InvalidPositionException(f"Knight cannot be placed at {(row, col)}")
+        if (
+            self.knight_position and
+            (row, col) not in self.get_possible_knight_moves(*self.knight_position)
+        ):
             raise InvalidKnightMove(f"Knight cannot move from {self.knight_position} to {(row, col)}")
         self.knight_position = (row, col)
-        self.visited.add((row, col))
+        self.visited.add(self.knight_position)
+        self.move_stack.append(self.knight_position)
 
     def get_valid_moves_ordered_by_cost(self) -> list[tuple[int, int]]:
         if self.knight_position is None:
-            raise NoKnightOnBoardException("There must be a knight on the board to move it")
+            possible_next_moves = self.get_list_of_all_board_tiles()
+        else:
+            possible_next_moves = self.get_possible_knight_moves(*self.knight_position)
         return sorted(
-            self.get_possible_knight_moves(*self.knight_position),
+            possible_next_moves,
             key=lambda x: len(self.get_possible_knight_moves(*x)),
         )
 
     def solved(self) -> bool:
         return len(self.visited) == self.rows * self.cols
+
+    def get_list_of_all_board_tiles(self) -> list[tuple[int, int]]:
+        valid_next_positions = []
+        for row in range(self.rows):
+            valid_next_positions.extend((row, col) for col in range(self.cols))
+        return valid_next_positions
