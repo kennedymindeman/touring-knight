@@ -111,4 +111,4 @@ def test_no_tiles_visited_before_knight_placed() -> None:
 def test_best_move_to_corner() -> None:
     board = Board(rows=5, cols=5)
     board.place_knight(2, 1)
-    assert board.find_best_next_move() == (0, 0)
+    assert board.get_valid_moves_ordered_by_cost()[0] == (0, 0)
