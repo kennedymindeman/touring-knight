@@ -31,7 +31,11 @@ class Board:
         self.knight_position = None
 
     def is_valid_position(self, row: int, col: int) -> bool:
-        return row in range(self.rows) and col in range(self.cols)
+        return (
+            row in range(self.rows) and
+            col in range(self.cols) and
+            (row, col) not in self.visited
+        )
 
     def place_knight(self, row: int, col: int) -> None:
         if not self.is_valid_position(row, col):
