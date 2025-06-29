@@ -82,3 +82,11 @@ class Board:
             self.knight_position = None
         else:
             self.knight_position = self.move_stack[-1]
+
+    def solve(self) -> None:
+        for move in self.get_valid_moves_ordered_by_cost():
+            self.place_knight(*move)
+            if self.solved():
+                break
+            self.solve()
+            self.backtrack()
