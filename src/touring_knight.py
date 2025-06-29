@@ -69,3 +69,6 @@ class Board:
             self.get_possible_knight_moves(*self.knight_position),
             key=lambda x: len(self.get_possible_knight_moves(*x)),
         )
+
+    def solved(self) -> bool:
+        return len(self.visited) == self.rows * self.cols
