@@ -117,3 +117,10 @@ def test_best_move_to_corner() -> None:
 def test_board_not_solved_on_instantiation() -> None:
     board = Board(rows=5, cols=5)
     assert not board.solved()
+
+
+def test_top_of_move_stack_has_move() -> None:
+    board = Board(rows=5, cols=5)
+    board.place_knight(0, 0)
+    board.move_knight(1, 2)
+    assert board.move_stack[-1] == (1, 2)
