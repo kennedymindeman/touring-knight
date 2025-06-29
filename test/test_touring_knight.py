@@ -105,3 +105,8 @@ def test_valid_moves_after_moving_to_corner() -> None:
     board.move_knight(row=0, col=0)
     possible_knight_moves = board.get_possible_knight_moves()
     assert (1, 2) not in possible_knight_moves
+
+
+def test_no_tiles_visited_before_knight_placed() -> None:
+    board = Board(rows=5, cols=5)
+    assert not board.visited
