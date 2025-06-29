@@ -42,26 +42,23 @@ def test_invalid_knight_placement() -> None:
 
 def test_number_of_possible_moves_in_corner() -> None:
     board = Board(rows=5, cols=5)
-    board.place_knight(0, 0)
-    assert len(board.get_possible_knight_moves()) == 2
+    assert len(board.get_possible_knight_moves(0, 0)) == 2
 
 
 def test_number_of_possible_moves_in_center() -> None:
     board = Board(rows=5, cols=5)
-    board.place_knight(2, 2)
-    assert len(board.get_possible_knight_moves()) == 8
+    assert len(board.get_possible_knight_moves(2, 2)) == 8
 
 
 def test_moveing_non_existent_knight() -> None:
     board = Board(rows=5, cols=5)
     with pytest.raises(NoKnightOnBoardException):
-        board.get_possible_knight_moves()
+        board.move_knight(0, 0)
 
 
 def test_next_moves_from_corner() -> None:
     board = Board(rows=5, cols=5)
-    board.place_knight(0, 0)
-    possible_knight_moves = board.get_possible_knight_moves()
+    possible_knight_moves = board.get_possible_knight_moves(0, 0)
     assert (1, 2) in possible_knight_moves
     assert (2, 1) in possible_knight_moves
 
@@ -102,11 +99,14 @@ def test_place_knight_visits_tile() -> None:
 def test_valid_moves_after_moving_to_corner() -> None:
     board = Board(rows=5, cols=5)
     board.place_knight(1, 2)
-    board.move_knight(0, 0)
-    possible_knight_moves = board.get_possible_knight_moves()
+    possible_knight_moves = board.get_possible_knight_moves(0, 0)
     assert (1, 2) not in possible_knight_moves
 
 
 def test_no_tiles_visited_before_knight_placed() -> None:
     board = Board(rows=5, cols=5)
     assert not board.visited
+
+
+def test_best_move_to_corner() -> None:
+    pass
