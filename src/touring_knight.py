@@ -45,3 +45,6 @@ class Board:
             if self.is_valid_position(*valid_next_position):
                 valid_next_positions.append(valid_next_position)
         return valid_next_positions
+
+    def move_knight(self) -> None:
+        raise NotImplementedError()

@@ -63,3 +63,10 @@ def test_next_moves_from_corner() -> None:
     possible_knight_moves = board.get_possible_knight_moves()
     assert (1, 2) in possible_knight_moves
     assert (2, 1) in possible_knight_moves
+
+
+def test_move_knight_from_center() -> None:
+    board = Board(rows=5, cols=5)
+    board.place_knight(2, 2)
+    board.move_knight(row=1, col=0)
+    assert board.knight_position == (1, 0)
