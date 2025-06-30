@@ -14,7 +14,7 @@ class BackTrackException(InvalidBoardException):
     pass
 
 
-class Board:
+class KnightTourSolver:
     KNIGHT_OFFSETS = (
         (1, 2), (-1, 2), (-1, -2), (1, -2),
         (2, 1), (-2, 1), (-2, -1), (2, -1),
@@ -36,7 +36,7 @@ class Board:
 
     def get_possible_knight_moves(self, row: int, col: int) -> list[tuple[int, int]]:
         valid_next_positions = []
-        for row_offset, col_offset in Board.KNIGHT_OFFSETS:
+        for row_offset, col_offset in KnightTourSolver.KNIGHT_OFFSETS:
             valid_next_position = (row + row_offset, col + col_offset)
             if self.is_valid_position(*valid_next_position):
                 valid_next_positions.append(valid_next_position)

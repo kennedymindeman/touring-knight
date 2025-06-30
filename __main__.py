@@ -1,5 +1,5 @@
 import timeit
-from src.touring_knight import Board
+from src.touring_knight import KnightTourSolver
 
 
 def main():
@@ -9,7 +9,8 @@ def main():
 
 
 def solve():
-    board = Board(rows=8, cols=8)
+    board = KnightTourSolver(rows=8, cols=8)
+    board.place_knight(1, 1)
     board.solve()
     return board
 
