@@ -83,10 +83,10 @@ class Board:
         else:
             self.knight_position = self.move_stack[-1]
 
-    def solve(self) -> None:
+    def solve(self) -> bool:
         for move in self.get_valid_moves_ordered_by_cost():
             self.place_knight(*move)
-            if self.solved():
-                break
-            self.solve()
+            if self.solved() or self.solve():
+                return True
             self.backtrack()
+        return False
