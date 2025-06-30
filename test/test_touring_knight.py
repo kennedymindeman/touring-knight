@@ -171,3 +171,18 @@ def test_backtracking_after_move_visted_length() -> None:
     board.place_knight(2, 1)
     board.backtrack()
     assert len(board.visited) == 1
+
+
+def test_5x5_solvable() -> None:
+    board = Board(rows=5, cols=5)
+    assert board.solve()
+
+
+def test_3x4_solvable() -> None:
+    board = Board(rows=3, cols=4)
+    assert board.solve()
+
+
+def test_3x5_solvable() -> None:
+    board = Board(rows=3, cols=5)
+    assert not board.solve()
